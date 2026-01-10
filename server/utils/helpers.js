@@ -14,6 +14,12 @@ export const paginatedResponse = (data, total, page, limit) => {
     return {
         success: true,
         data,
+        meta: {
+            total,
+            pages: totalPages,
+            currentPage: page,
+            limit
+        },
         pagination: {
             currentPage: page,
             totalPages,

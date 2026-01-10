@@ -2,6 +2,7 @@ import { query, getClient } from '../config/db.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { getPagination, paginatedResponse, daysBetween } from '../utils/helpers.js';
 import { validateProperty, validateEnum } from '../utils/validators.js';
+import { getFileUrl } from '../utils/upload.js';
 
 // @desc    Get all properties
 // @route   GET /api/properties
@@ -338,7 +339,7 @@ export const deleteProperty = asyncHandler(async (req, res) => {
 // @access  Private
 export const addPropertyPhoto = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { url, caption, is_primary, display_order } = req.body;
+    const { caption, is_primary, display_order } = req.body;
 
     // Check if property exists
     const propertyResult = await query('SELECT id FROM properties WHERE id = $1', [id]);
@@ -350,15 +351,22 @@ export const addPropertyPhoto = asyncHandler(async (req, res) => {
         });
     }
 
-    if (!url) {
+    let photoUrl = req.body.url;
+
+    // If file is uploaded, use it
+    if (req.file) {
+        photoUrl = getFileUrl(req.file.filename, 'photos');
+    }
+
+    if (!photoUrl) {
         return res.status(400).json({
             success: false,
-            message: 'Photo URL is required'
+            message: 'Photo is required'
         });
     }
 
     // If this is primary, unset other primary photos
-    if (is_primary) {
+    if (is_primary === 'true' || is_primary === true) {
         await query(
             'UPDATE property_photos SET is_primary = false WHERE property_id = $1',
             [id]
@@ -369,7 +377,7 @@ export const addPropertyPhoto = asyncHandler(async (req, res) => {
         `INSERT INTO property_photos (property_id, url, caption, is_primary, display_order)
      VALUES ($1, $2, $3, $4, $5)
      RETURNING *`,
-        [id, url, caption || null, is_primary || false, display_order || 0]
+        [id, photoUrl, caption || null, (is_primary === 'true' || is_primary === true), display_order || 0]
     );
 
     res.status(201).json({
@@ -408,7 +416,8 @@ export const deletePropertyPhoto = asyncHandler(async (req, res) => {
 // @access  Private
 export const addPropertyDocument = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { document_type, file_name, file_url } = req.body;
+    const { document_type } = req.body;
+    let { file_name, file_url } = req.body;
 
     // Check if property exists
     const propertyResult = await query('SELECT id FROM properties WHERE id = $1', [id]);
@@ -420,10 +429,16 @@ export const addPropertyDocument = asyncHandler(async (req, res) => {
         });
     }
 
+    // If file is uploaded, use it
+    if (req.file) {
+        file_url = getFileUrl(req.file.filename, 'documents');
+        file_name = file_name || req.file.originalname;
+    }
+
     if (!file_name || !file_url) {
         return res.status(400).json({
             success: false,
-            message: 'File name and URL are required'
+            message: 'Document file is required'
         });
     }
 
