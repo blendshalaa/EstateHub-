@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import { Plus, Calendar, MapPin, User, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Plus, Calendar, MapPin, User, Clock, CheckCircle, XCircle, AlertCircle, MoreHorizontal, ArrowRight } from 'lucide-react';
 import useShowingStore from '../store/showingStore';
 import Button from '../components/common/Button';
 import Card from '../components/common/Card';
+import ShowingModal from '../components/showings/ShowingModal';
 import { formatDate } from '../utils/helpers';
 
 const ShowingCard = ({ showing }) => {
     const statusColors = {
-        scheduled: 'bg-blue-100 text-blue-800',
-        completed: 'bg-green-100 text-green-800',
-        cancelled: 'bg-red-100 text-red-800',
-        no_show: 'bg-gray-100 text-gray-800'
+        scheduled: 'bg-blue-50 text-blue-700 border-blue-100',
+        completed: 'bg-green-50 text-green-700 border-green-100',
+        cancelled: 'bg-red-50 text-red-700 border-red-100',
+        no_show: 'bg-gray-50 text-gray-700 border-gray-100'
     };
 
     const statusIcons = {
@@ -23,48 +24,82 @@ const ShowingCard = ({ showing }) => {
     const StatusIcon = statusIcons[showing.status] || AlertCircle;
 
     return (
-        <Card className="hover:shadow-md transition-shadow">
-            <div className="p-5">
-                <div className="flex justify-between items-start">
-                    <div className="flex items-start space-x-4">
-                        <div className="flex-shrink-0">
-                            <div className="h-12 w-12 rounded-lg bg-primary-50 flex items-col flex-col items-center justify-center text-primary-700 border border-primary-100">
-                                <span className="text-xs font-bold uppercase">{new Date(showing.scheduled_date).toLocaleString('default', { month: 'short' })}</span>
-                                <span className="text-lg font-bold">{new Date(showing.scheduled_date).getDate()}</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 className="text-base font-semibold text-gray-900">{showing.property_title}</h3>
-                            <div className="mt-1 flex items-center text-sm text-gray-500">
-                                <MapPin className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" />
-                                {showing.property_address}
-                            </div>
-                            <div className="mt-1 flex items-center text-sm text-gray-500">
-                                <User className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" />
-                                Client: {showing.client_first_name} {showing.client_last_name}
-                            </div>
-                        </div>
-                    </div>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${statusColors[showing.status]}`}>
-                        {showing.status}
+        <Card className="hover:shadow-lg transition-all duration-300 border-gray-100 group overflow-hidden">
+            <div className="relative h-32 w-full overflow-hidden bg-gray-100">
+                <img
+                    src={`https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`}
+                    alt="Property"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute top-3 right-3">
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border backdrop-blur-md ${statusColors[showing.status]}`}>
+                        <StatusIcon className="w-3 h-3 mr-1" />
+                        {showing.status.replace('_', ' ')}
                     </span>
                 </div>
-
-                <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
-                    <div className="flex items-center text-sm text-gray-600">
-                        <Clock className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" />
-                        {new Date(showing.scheduled_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        <span className="mx-2 text-gray-300">|</span>
-                        {showing.duration_minutes} min
-                    </div>
-
-                    {showing.status === 'scheduled' && (
-                        <div className="flex space-x-2">
-                            <Button variant="secondary" size="sm">Reschedule</Button>
-                            <Button variant="primary" size="sm">Complete</Button>
+                <div className="absolute bottom-3 left-3">
+                    <div className="flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm border border-white/20">
+                        <div className="flex flex-col items-center leading-none">
+                            <span className="text-[10px] font-bold text-primary-600 uppercase">{new Date(showing.scheduled_date).toLocaleString('default', { month: 'short' })}</span>
+                            <span className="text-sm font-black text-gray-900">{new Date(showing.scheduled_date).getDate()}</span>
                         </div>
-                    )}
+                        <div className="h-6 w-px bg-gray-200" />
+                        <div className="flex flex-col leading-none">
+                            <span className="text-[10px] font-bold text-gray-500 uppercase">Time</span>
+                            <span className="text-xs font-bold text-gray-900">{new Date(showing.scheduled_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div className="p-4">
+                <div className="mb-4">
+                    <h3 className="text-sm font-bold text-gray-900 line-clamp-1 group-hover:text-primary-600 transition-colors">
+                        {showing.property_address}
+                    </h3>
+                    <div className="mt-1 flex items-center text-[11px] text-gray-500">
+                        <MapPin className="flex-shrink-0 mr-1 h-3 w-3 text-gray-400" />
+                        {showing.property_city || 'New York, NY'}
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between mb-4 bg-gray-50 p-2 rounded-lg">
+                    <div className="flex items-center">
+                        <div className="h-7 w-7 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold text-[10px] border-2 border-white shadow-sm">
+                            {showing.client_first_name ? showing.client_first_name[0] : 'C'}
+                        </div>
+                        <div className="ml-2">
+                            <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-0.5">Client</p>
+                            <p className="text-xs font-bold text-gray-700 leading-none">
+                                {showing.client_first_name} {showing.client_last_name}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="text-right">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-0.5">Duration</p>
+                        <p className="text-xs font-bold text-gray-700 leading-none flex items-center justify-end">
+                            <Clock className="w-3 h-3 mr-1 text-gray-400" />
+                            {showing.duration_minutes}m
+                        </p>
+                    </div>
+                </div>
+
+                {showing.status === 'scheduled' && (
+                    <div className="grid grid-cols-2 gap-2">
+                        <Button variant="secondary" size="sm" className="text-[11px] py-1.5 h-auto font-bold">
+                            Cancel
+                        </Button>
+                        <Button variant="primary" size="sm" className="text-[11px] py-1.5 h-auto font-bold shadow-sm shadow-primary-100">
+                            Complete
+                        </Button>
+                    </div>
+                )}
+
+                {showing.status !== 'scheduled' && (
+                    <Button variant="secondary" size="sm" className="w-full text-[11px] py-1.5 h-auto font-bold opacity-50 cursor-not-allowed">
+                        View Details
+                    </Button>
+                )}
             </div>
         </Card>
     );
@@ -72,6 +107,7 @@ const ShowingCard = ({ showing }) => {
 
 const Showings = () => {
     const { showings, isLoading, error, fetchShowings } = useShowingStore();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         fetchShowings();
@@ -101,33 +137,51 @@ const Showings = () => {
     });
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Showings</h1>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Showings</h1>
+                    <p className="text-sm text-gray-500 mt-1 flex items-center">
                         Manage your property viewing schedule
+                        <ArrowRight className="w-3 h-3 mx-2 text-gray-300" />
+                        <span className="text-primary-600 font-medium">{showings.filter(s => s.status === 'scheduled').length} Scheduled</span>
                     </p>
                 </div>
-                <Button>
+                <Button
+                    className="shadow-lg shadow-primary-200"
+                    onClick={() => setIsModalOpen(true)}
+                >
                     <Plus className="w-4 h-4 mr-2" />
                     Schedule Showing
                 </Button>
             </div>
 
-            {isLoading ? (
-                <div className="flex justify-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+            <ShowingModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
+
+            {isLoading && showings.length === 0 ? (
+                <div className="flex justify-center py-24">
+                    <div className="relative">
+                        <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-100"></div>
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary-600 absolute top-0 left-0"></div>
+                    </div>
                 </div>
             ) : (
-                <div className="space-y-8">
+                <div className="space-y-12">
                     {/* Today's Showings */}
                     {groupedShowings.today.length > 0 && (
                         <section>
-                            <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                <Calendar className="w-5 h-5 mr-2 text-primary-600" />
-                                Today
-                            </h2>
+                            <div className="flex items-center space-x-3 mb-6">
+                                <div className="p-2 bg-primary-50 rounded-lg">
+                                    <Calendar className="w-5 h-5 text-primary-600" />
+                                </div>
+                                <h2 className="text-xl font-bold text-gray-900">Today's Schedule</h2>
+                                <span className="bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                                    {groupedShowings.today.length} Events
+                                </span>
+                            </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {groupedShowings.today.map(showing => (
                                     <ShowingCard key={showing.id} showing={showing} />
@@ -139,7 +193,12 @@ const Showings = () => {
                     {/* Upcoming Showings */}
                     {groupedShowings.upcoming.length > 0 && (
                         <section>
-                            <h2 className="text-lg font-semibold text-gray-900 mb-4">Upcoming</h2>
+                            <div className="flex items-center space-x-3 mb-6">
+                                <div className="p-2 bg-blue-50 rounded-lg">
+                                    <Clock className="w-5 h-5 text-blue-600" />
+                                </div>
+                                <h2 className="text-xl font-bold text-gray-900">Upcoming Showings</h2>
+                            </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {groupedShowings.upcoming.map(showing => (
                                     <ShowingCard key={showing.id} showing={showing} />
@@ -151,8 +210,13 @@ const Showings = () => {
                     {/* Past Showings */}
                     {groupedShowings.past.length > 0 && (
                         <section>
-                            <h2 className="text-lg font-semibold text-gray-900 mb-4 text-gray-500">Past</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-75">
+                            <div className="flex items-center space-x-3 mb-6 opacity-60">
+                                <div className="p-2 bg-gray-100 rounded-lg">
+                                    <CheckCircle className="w-5 h-5 text-gray-500" />
+                                </div>
+                                <h2 className="text-xl font-bold text-gray-900">Past Events</h2>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-60 grayscale-[0.5]">
                                 {groupedShowings.past.map(showing => (
                                     <ShowingCard key={showing.id} showing={showing} />
                                 ))}
@@ -161,18 +225,21 @@ const Showings = () => {
                     )}
 
                     {showings.length === 0 && (
-                        <div className="text-center py-12 bg-white rounded-xl border border-gray-200 border-dashed">
-                            <div className="mx-auto h-12 w-12 text-gray-400">
-                                <Calendar className="h-12 w-12" />
+                        <div className="text-center py-24 bg-gray-50/50 rounded-3xl border-2 border-dashed border-gray-200">
+                            <div className="mx-auto h-20 w-20 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                                <Calendar className="h-10 w-10 text-gray-300" />
                             </div>
-                            <h3 className="mt-2 text-sm font-medium text-gray-900">No showings scheduled</h3>
-                            <p className="mt-1 text-sm text-gray-500">
-                                Schedule a new showing to get started.
+                            <h3 className="text-lg font-bold text-gray-900">No showings scheduled</h3>
+                            <p className="mt-2 text-sm text-gray-500 max-w-xs mx-auto">
+                                Your schedule is currently empty. Start by scheduling a property viewing for your clients.
                             </p>
-                            <div className="mt-6">
-                                <Button>
+                            <div className="mt-8">
+                                <Button
+                                    className="shadow-lg shadow-primary-200"
+                                    onClick={() => setIsModalOpen(true)}
+                                >
                                     <Plus className="w-4 h-4 mr-2" />
-                                    Schedule Showing
+                                    Schedule First Showing
                                 </Button>
                             </div>
                         </div>

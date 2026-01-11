@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Plus, Filter, Search, Home } from 'lucide-react';
 import usePropertyStore from '../store/propertyStore';
 import PropertyCard from '../components/properties/PropertyCard';
+import PropertyModal from '../components/properties/PropertyModal';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 
@@ -16,6 +17,8 @@ const Properties = () => {
         pagination,
         setPage
     } = usePropertyStore();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         fetchProperties();
@@ -43,11 +46,16 @@ const Properties = () => {
                         Manage your property listings and inventory
                     </p>
                 </div>
-                <Button>
+                <Button onClick={() => setIsModalOpen(true)}>
                     <Plus className="w-4 h-4 mr-2" />
                     Add Property
                 </Button>
             </div>
+
+            <PropertyModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
 
             {/* Filters */}
             <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
@@ -154,7 +162,7 @@ const Properties = () => {
                         Get started by creating a new property listing.
                     </p>
                     <div className="mt-6">
-                        <Button>
+                        <Button onClick={() => setIsModalOpen(true)}>
                             <Plus className="w-4 h-4 mr-2" />
                             Add Property
                         </Button>

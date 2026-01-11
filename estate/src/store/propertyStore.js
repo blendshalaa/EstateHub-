@@ -88,16 +88,16 @@ const usePropertyStore = create((set, get) => ({
     createProperty: async (propertyData) => {
         set({ isLoading: true, error: null });
         try {
-            await api.post('/properties', propertyData);
+            const response = await api.post('/properties', propertyData);
             set({ isLoading: false });
             get().fetchProperties(); // Refresh list
-            return true;
+            return response.data.data;
         } catch (error) {
             set({
                 error: error.response?.data?.message || 'Failed to create property',
                 isLoading: false
             });
-            return false;
+            return null;
         }
     },
 
@@ -130,6 +130,33 @@ const usePropertyStore = create((set, get) => ({
                 isLoading: false
             });
             return false;
+        }
+    },
+
+    addPropertyPhoto: async (id, photoData) => {
+        set({ isLoading: true, error: null });
+        try {
+            const formData = new FormData();
+            if (photoData.file) {
+                formData.append('photo', photoData.file);
+            }
+            if (photoData.caption) formData.append('caption', photoData.caption);
+            if (photoData.is_primary) formData.append('is_primary', photoData.is_primary);
+            if (photoData.display_order) formData.append('display_order', photoData.display_order);
+
+            const response = await api.post(`/properties/${id}/photos`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            set({ isLoading: false });
+            return response.data.data;
+        } catch (error) {
+            set({
+                error: error.response?.data?.message || 'Failed to upload photo',
+                isLoading: false
+            });
+            return null;
         }
     }
 }));

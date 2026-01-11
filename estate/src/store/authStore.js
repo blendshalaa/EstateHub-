@@ -3,6 +3,7 @@ import api from '../services/api';
 
 const useAuthStore = create((set) => ({
     user: JSON.parse(localStorage.getItem('user')) || null,
+    agent: JSON.parse(localStorage.getItem('agent')) || null,
     token: localStorage.getItem('token') || null,
     isAuthenticated: !!localStorage.getItem('token'),
     isLoading: false,
@@ -12,13 +13,15 @@ const useAuthStore = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await api.post('/auth/login', { email, password });
-            const { user, token } = response.data.data;
+            const { user, agent, token } = response.data.data;
 
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
+            if (agent) localStorage.setItem('agent', JSON.stringify(agent));
 
             set({
                 user,
+                agent,
                 token,
                 isAuthenticated: true,
                 isLoading: false
@@ -37,13 +40,15 @@ const useAuthStore = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await api.post('/auth/register', userData);
-            const { user, token } = response.data.data;
+            const { user, agent, token } = response.data.data;
 
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
+            if (agent) localStorage.setItem('agent', JSON.stringify(agent));
 
             set({
                 user,
+                agent,
                 token,
                 isAuthenticated: true,
                 isLoading: false
@@ -61,8 +66,10 @@ const useAuthStore = create((set) => ({
     logout: () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('agent');
         set({
             user: null,
+            agent: null,
             token: null,
             isAuthenticated: false
         });
