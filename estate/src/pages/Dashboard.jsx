@@ -29,7 +29,7 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue, color }) => (
             <div className="flex items-center justify-between">
                 <div>
                     <p className="text-sm font-medium text-gray-500">{title}</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
+                    <p className="text-2xl font-bold text-white mt-1">{value}</p>
                 </div>
                 <div className={`p-3 rounded-full ${color}`}>
                     <Icon className="h-6 w-6 text-white" />
@@ -91,7 +91,7 @@ const Dashboard = () => {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+                <h1 className="text-2xl font-bold text-white">Dashboard</h1>
                 <div className="flex items-center space-x-2 text-sm text-gray-500">
                     <Calendar className="h-4 w-4" />
                     <span>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -179,7 +179,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="min-w-0 flex-1">
-                                        <p className="text-sm font-medium text-gray-900">
+                                        <p className="text-sm font-medium text-white">
                                             {activity.description}
                                         </p>
                                         <p className="text-xs text-gray-500">

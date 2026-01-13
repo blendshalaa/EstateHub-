@@ -63,7 +63,7 @@ const Clients = () => {
     const statusColors = {
         active: 'bg-green-100 text-green-800',
         lead: 'bg-blue-100 text-blue-800',
-        closed: 'bg-gray-100 text-gray-800',
+        closed: 'bg-primary-900/50 text-primary-300 border border-primary-700',
         inactive: 'bg-red-100 text-red-800'
     };
 
@@ -72,7 +72,7 @@ const Clients = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Clients</h1>
+                    <h1 className="text-2xl font-bold text-white">Clients</h1>
                     <p className="text-sm text-gray-500 mt-1">
                         Manage your client relationships and leads
                     </p>
@@ -84,7 +84,7 @@ const Clients = () => {
             </div>
 
             {/* Filters */}
-            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+            <div className="card p-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -93,14 +93,14 @@ const Clients = () => {
                         <input
                             type="text"
                             placeholder="Search clients..."
-                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-primary-500 focus:border-primary-500"
+                            className="input pl-10"
                             value={filters.search || ''}
                             onChange={handleSearch}
                         />
                     </div>
 
                     <select
-                        className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-lg text-sm focus:ring-primary-500 focus:border-primary-500"
+                        className="input"
                         value={filters.status || ''}
                         onChange={handleStatusChange}
                     >
@@ -119,7 +119,7 @@ const Clients = () => {
             </div>
 
             {/* Table */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="card overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
@@ -144,7 +144,7 @@ const Clients = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
+                        <tbody className="bg-primary-900/50 divide-y divide-primary-800">
                             {isLoading ? (
                                 <tr>
                                     <td colSpan="6" className="px-6 py-12 text-center">
@@ -164,7 +164,7 @@ const Clients = () => {
                                                     </div>
                                                 </div>
                                                 <div className="ml-4">
-                                                    <div className="text-sm font-medium text-gray-900">
+                                                    <div className="text-sm font-medium text-white">
                                                         {client.first_name} {client.last_name}
                                                     </div>
                                                     <div className="text-sm text-gray-500">
@@ -198,8 +198,8 @@ const Clients = () => {
                                                 <div className="flex-1 h-2 w-24 bg-gray-200 rounded-full overflow-hidden">
                                                     <div
                                                         className={`h-full rounded-full ${client.lead_score >= 80 ? 'bg-green-500' :
-                                                                client.lead_score >= 50 ? 'bg-yellow-500' :
-                                                                    'bg-red-500'
+                                                            client.lead_score >= 50 ? 'bg-yellow-500' :
+                                                                'bg-red-500'
                                                             }`}
                                                         style={{ width: `${client.lead_score}%` }}
                                                     />
@@ -227,10 +227,10 @@ const Clients = () => {
 
                 {/* Pagination */}
                 {clients.length > 0 && (
-                    <div className="bg-white px-4 py-3 border-t border-gray-200 flex items-center justify-between sm:px-6">
+                    <div className="bg-primary-900/50 px-4 py-3 border-t border-primary-800 flex items-center justify-between sm:px-6">
                         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
-                                <p className="text-sm text-gray-700">
+                                <p className="text-sm text-primary-300">
                                     Showing <span className="font-medium">{(pagination.page - 1) * pagination.limit + 1}</span> to{' '}
                                     <span className="font-medium">{Math.min(pagination.page * pagination.limit, pagination.total)}</span> of{' '}
                                     <span className="font-medium">{pagination.total}</span> results
@@ -303,14 +303,14 @@ const Clients = () => {
                     />
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="label">
                                 Status
                             </label>
                             <select
                                 name="status"
                                 value={formData.status}
                                 onChange={handleInputChange}
-                                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                                className="input"
                             >
                                 <option value="lead">Lead</option>
                                 <option value="active">Active</option>

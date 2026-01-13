@@ -27,10 +27,10 @@ const Login = () => {
     return (
         <div>
             <div className="sm:mx-auto sm:w-full sm:max-w-md mb-6">
-                <h2 className="text-center text-2xl font-bold text-gray-900">
+                <h2 className="text-center text-2xl font-bold text-white">
                     Sign in to your account
                 </h2>
-                <p className="mt-2 text-center text-sm text-gray-600">
+                <p className="mt-2 text-center text-sm text-primary-300">
                     Or{' '}
                     <Link to="/register" className="font-medium text-primary-600 hover:text-primary-500">
                         create a new account
@@ -71,9 +71,9 @@ const Login = () => {
                             id="remember-me"
                             name="remember-me"
                             type="checkbox"
-                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-primary-700 rounded bg-primary-900/50"
                         />
-                        <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                        <label htmlFor="remember-me" className="ml-2 block text-sm text-primary-200">
                             Remember me
                         </label>
                     </div>

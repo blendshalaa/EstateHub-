@@ -11,7 +11,7 @@ const ShowingCard = ({ showing }) => {
         scheduled: 'bg-blue-50 text-blue-700 border-blue-100',
         completed: 'bg-green-50 text-green-700 border-green-100',
         cancelled: 'bg-red-50 text-red-700 border-red-100',
-        no_show: 'bg-gray-50 text-gray-700 border-gray-100'
+        no_show: 'bg-primary-900/50 text-primary-300 border-primary-800'
     };
 
     const statusIcons = {
@@ -38,15 +38,15 @@ const ShowingCard = ({ showing }) => {
                     </span>
                 </div>
                 <div className="absolute bottom-3 left-3">
-                    <div className="flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm border border-white/20">
+                    <div className="flex items-center space-x-2 bg-primary-900/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm border border-primary-700/50">
                         <div className="flex flex-col items-center leading-none">
                             <span className="text-[10px] font-bold text-primary-600 uppercase">{new Date(showing.scheduled_date).toLocaleString('default', { month: 'short' })}</span>
-                            <span className="text-sm font-black text-gray-900">{new Date(showing.scheduled_date).getDate()}</span>
+                            <span className="text-sm font-black text-white">{new Date(showing.scheduled_date).getDate()}</span>
                         </div>
                         <div className="h-6 w-px bg-gray-200" />
                         <div className="flex flex-col leading-none">
                             <span className="text-[10px] font-bold text-gray-500 uppercase">Time</span>
-                            <span className="text-xs font-bold text-gray-900">{new Date(showing.scheduled_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                            <span className="text-xs font-bold text-white">{new Date(showing.scheduled_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ const ShowingCard = ({ showing }) => {
 
             <div className="p-4">
                 <div className="mb-4">
-                    <h3 className="text-sm font-bold text-gray-900 line-clamp-1 group-hover:text-primary-600 transition-colors">
+                    <h3 className="text-sm font-bold text-white line-clamp-1 group-hover:text-primary-400 transition-colors">
                         {showing.property_address}
                     </h3>
                     <div className="mt-1 flex items-center text-[11px] text-gray-500">
@@ -70,14 +70,14 @@ const ShowingCard = ({ showing }) => {
                         </div>
                         <div className="ml-2">
                             <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-0.5">Client</p>
-                            <p className="text-xs font-bold text-gray-700 leading-none">
+                            <p className="text-xs font-bold text-primary-200 leading-none">
                                 {showing.client_first_name} {showing.client_last_name}
                             </p>
                         </div>
                     </div>
                     <div className="text-right">
                         <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-0.5">Duration</p>
-                        <p className="text-xs font-bold text-gray-700 leading-none flex items-center justify-end">
+                        <p className="text-xs font-bold text-primary-200 leading-none flex items-center justify-end">
                             <Clock className="w-3 h-3 mr-1 text-gray-400" />
                             {showing.duration_minutes}m
                         </p>
@@ -140,7 +140,7 @@ const Showings = () => {
         <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Showings</h1>
+                    <h1 className="text-3xl font-extrabold text-white tracking-tight">Showings</h1>
                     <p className="text-sm text-gray-500 mt-1 flex items-center">
                         Manage your property viewing schedule
                         <ArrowRight className="w-3 h-3 mx-2 text-gray-300" />
@@ -177,7 +177,7 @@ const Showings = () => {
                                 <div className="p-2 bg-primary-50 rounded-lg">
                                     <Calendar className="w-5 h-5 text-primary-600" />
                                 </div>
-                                <h2 className="text-xl font-bold text-gray-900">Today's Schedule</h2>
+                                <h2 className="text-xl font-bold text-white">Today's Schedule</h2>
                                 <span className="bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
                                     {groupedShowings.today.length} Events
                                 </span>
@@ -197,7 +197,7 @@ const Showings = () => {
                                 <div className="p-2 bg-blue-50 rounded-lg">
                                     <Clock className="w-5 h-5 text-blue-600" />
                                 </div>
-                                <h2 className="text-xl font-bold text-gray-900">Upcoming Showings</h2>
+                                <h2 className="text-xl font-bold text-white">Upcoming Showings</h2>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {groupedShowings.upcoming.map(showing => (
@@ -214,7 +214,7 @@ const Showings = () => {
                                 <div className="p-2 bg-gray-100 rounded-lg">
                                     <CheckCircle className="w-5 h-5 text-gray-500" />
                                 </div>
-                                <h2 className="text-xl font-bold text-gray-900">Past Events</h2>
+                                <h2 className="text-xl font-bold text-white">Past Events</h2>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-60 grayscale-[0.5]">
                                 {groupedShowings.past.map(showing => (
@@ -225,8 +225,8 @@ const Showings = () => {
                     )}
 
                     {showings.length === 0 && (
-                        <div className="text-center py-24 bg-gray-50/50 rounded-3xl border-2 border-dashed border-gray-200">
-                            <div className="mx-auto h-20 w-20 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                        <div className="text-center py-24 bg-primary-900/20 rounded-3xl border-2 border-dashed border-primary-800">
+                            <div className="mx-auto h-20 w-20 bg-primary-900/50 rounded-2xl shadow-sm flex items-center justify-center mb-6">
                                 <Calendar className="h-10 w-10 text-gray-300" />
                             </div>
                             <h3 className="text-lg font-bold text-gray-900">No showings scheduled</h3>

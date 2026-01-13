@@ -41,7 +41,7 @@ const Properties = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Properties</h1>
+                    <h1 className="text-2xl font-bold text-white">Properties</h1>
                     <p className="text-sm text-gray-500 mt-1">
                         Manage your property listings and inventory
                     </p>
@@ -58,7 +58,7 @@ const Properties = () => {
             />
 
             {/* Filters */}
-            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+            <div className="card p-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -67,14 +67,14 @@ const Properties = () => {
                         <input
                             type="text"
                             placeholder="Search by city..."
-                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-primary-500 focus:border-primary-500"
+                            className="input pl-10"
                             value={filters.city || ''}
                             onChange={handleSearch}
                         />
                     </div>
 
                     <select
-                        className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-lg text-sm focus:ring-primary-500 focus:border-primary-500"
+                        className="input"
                         value={filters.type || ''}
                         onChange={handleTypeChange}
                     >
@@ -87,7 +87,7 @@ const Properties = () => {
                     </select>
 
                     <select
-                        className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-lg text-sm focus:ring-primary-500 focus:border-primary-500"
+                        className="input"
                         value={filters.status || ''}
                         onChange={handleStatusChange}
                     >
@@ -126,7 +126,7 @@ const Properties = () => {
                     </div>
 
                     {/* Pagination */}
-                    <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+                    <div className="flex items-center justify-between border-t border-primary-800 pt-4">
                         <div className="text-sm text-gray-500">
                             Showing <span className="font-medium">{(pagination.page - 1) * pagination.limit + 1}</span> to{' '}
                             <span className="font-medium">{Math.min(pagination.page * pagination.limit, pagination.total)}</span> of{' '}
@@ -153,11 +153,11 @@ const Properties = () => {
                     </div>
                 </>
             ) : (
-                <div className="text-center py-12 bg-white rounded-xl border border-gray-200 border-dashed">
+                <div className="text-center py-12 card border-dashed border-primary-700">
                     <div className="mx-auto h-12 w-12 text-gray-400">
                         <Home className="h-12 w-12" />
                     </div>
-                    <h3 className="mt-2 text-sm font-medium text-gray-900">No properties found</h3>
+                    <h3 className="mt-2 text-sm font-medium text-white">No properties found</h3>
                     <p className="mt-1 text-sm text-gray-500">
                         Get started by creating a new property listing.
                     </p>

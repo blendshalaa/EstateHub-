@@ -13,12 +13,12 @@ const DealCard = ({ deal, index }) => (
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
-                className={`bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all cursor-grab active:cursor-grabbing mb-3 group ${snapshot.isDragging ? 'shadow-xl ring-2 ring-primary-500 ring-opacity-50 rotate-2' : ''
+                className={`card p-4 hover:shadow-lg transition-all cursor-grab active:cursor-grabbing mb-3 group ${snapshot.isDragging ? 'shadow-xl ring-2 ring-primary-500 ring-opacity-50 rotate-2' : ''
                     }`}
             >
                 <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
-                        <h4 className="text-sm font-bold text-gray-900 line-clamp-1 group-hover:text-primary-600 transition-colors">
+                        <h4 className="text-sm font-bold text-white line-clamp-1 group-hover:text-primary-400 transition-colors">
                             {deal.deal_name}
                         </h4>
                         {deal.property_address && (
@@ -28,7 +28,7 @@ const DealCard = ({ deal, index }) => (
                             </div>
                         )}
                     </div>
-                    <button className="text-gray-400 hover:text-gray-600 p-1 rounded-md hover:bg-gray-50 transition-colors">
+                    <button className="text-primary-400 hover:text-white p-1 rounded-md hover:bg-primary-800 transition-colors">
                         <MoreHorizontal className="w-4 h-4" />
                     </button>
                 </div>
@@ -38,7 +38,7 @@ const DealCard = ({ deal, index }) => (
                         <div className="h-6 w-6 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-bold mr-2 text-[10px] shadow-sm">
                             {getInitials(deal.client_first_name, deal.client_last_name)}
                         </div>
-                        <span className="text-xs font-medium text-gray-600">
+                        <span className="text-xs font-medium text-primary-300">
                             {deal.client_first_name} {deal.client_last_name}
                         </span>
                     </div>
@@ -74,7 +74,7 @@ const PipelineColumn = ({ title, deals, stage, count, totalValue }) => (
                     stage === 'closed_lost' ? 'bg-red-500' :
                         stage === 'under_contract' ? 'bg-blue-500' : 'bg-primary-500'
                     }`} />
-                <h3 className="font-bold text-gray-800 text-sm tracking-tight">{title}</h3>
+                <h3 className="font-bold text-primary-100 text-sm tracking-tight">{title}</h3>
                 <span className="bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full text-[10px] font-bold">
                     {count}
                 </span>
@@ -99,8 +99,8 @@ const PipelineColumn = ({ title, deals, stage, count, totalValue }) => (
                     ))}
                     {provided.placeholder}
                     {deals.length === 0 && !snapshot.isDraggingOver && (
-                        <div className="h-32 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center text-gray-400 text-xs space-y-2 group-hover/column:border-gray-300 transition-colors">
-                            <div className="p-2 bg-white rounded-full shadow-sm">
+                        <div className="h-32 border-2 border-dashed border-primary-800 rounded-xl flex flex-col items-center justify-center text-primary-400 text-xs space-y-2 group-hover/column:border-primary-700 transition-colors">
+                            <div className="p-2 bg-primary-900/50 rounded-full shadow-sm">
                                 <Plus className="w-4 h-4 text-gray-300" />
                             </div>
                             <span>No deals in {title}</span>
@@ -165,7 +165,7 @@ const Deals = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 flex-shrink-0">
                 <div>
-                    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Deal Pipeline</h1>
+                    <h1 className="text-3xl font-extrabold text-white tracking-tight">Deal Pipeline</h1>
                     <p className="text-sm text-gray-500 mt-1 flex items-center">
                         Manage your sales funnel and track progress
                         <ArrowRight className="w-3 h-3 mx-2 text-gray-300" />
@@ -173,9 +173,9 @@ const Deals = () => {
                     </p>
                 </div>
                 <div className="flex items-center space-x-3">
-                    <div className="hidden md:flex items-center bg-white border border-gray-200 rounded-lg px-3 py-2 shadow-sm">
+                    <div className="hidden md:flex items-center bg-primary-900/50 border border-primary-800 rounded-lg px-3 py-2 shadow-sm">
                         <DollarSign className="w-4 h-4 text-green-500 mr-2" />
-                        <span className="text-sm font-bold text-gray-700">
+                        <span className="text-sm font-bold text-primary-200">
                             {formatCurrency(deals.reduce((sum, d) => sum + Number(d.offer_amount || 0), 0))}
                         </span>
                         <span className="text-[10px] text-gray-400 ml-2 uppercase font-bold tracking-wider">Total Volume</span>

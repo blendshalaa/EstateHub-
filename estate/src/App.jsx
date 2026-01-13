@@ -13,6 +13,7 @@ import Deals from './pages/Deals';
 import Showings from './pages/Showings';
 import Communications from './pages/Communications';
 import Tasks from './pages/Tasks';
+import Map from './pages/Map';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/showings" element={<Showings />} />
           <Route path="/communications" element={<Communications />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/map" element={<Map />} />
         </Route>
 
         {/* Catch all */}

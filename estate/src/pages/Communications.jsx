@@ -29,7 +29,7 @@ const Communications = () => {
             case 'call': return 'bg-blue-50 text-blue-600 border-blue-100';
             case 'email': return 'bg-purple-50 text-purple-600 border-purple-100';
             case 'meeting': return 'bg-green-50 text-green-600 border-green-100';
-            default: return 'bg-gray-50 text-gray-600 border-gray-100';
+            default: return 'bg-primary-900/50 text-primary-300 border-primary-800';
         }
     };
 
@@ -41,7 +41,7 @@ const Communications = () => {
         <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Communications</h1>
+                    <h1 className="text-3xl font-extrabold text-white tracking-tight">Communications</h1>
                     <p className="text-sm text-gray-500 mt-1 flex items-center">
                         Track all client interactions and touchpoints
                         <ArrowRight className="w-3 h-3 mx-2 text-gray-300" />
@@ -70,7 +70,7 @@ const Communications = () => {
                         onClick={() => setFilterType(type)}
                         className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border ${filterType === type
                             ? 'bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-100 scale-105'
-                            : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+                            : 'bg-primary-900/50 text-primary-400 border-primary-800 hover:border-primary-700'
                             }`}
                     >
                         {type}
@@ -99,7 +99,7 @@ const Communications = () => {
                                                 <Icon className="h-6 w-6" />
                                             </div>
                                             <div className="ml-4">
-                                                <h3 className="text-sm font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                                                <h3 className="text-sm font-bold text-white group-hover:text-primary-400 transition-colors">
                                                     {comm.subject}
                                                 </h3>
                                                 <div className="flex items-center mt-1 space-x-3">
@@ -125,7 +125,7 @@ const Communications = () => {
                                         <div className="absolute -top-2 left-4 px-2 bg-gray-50 text-[10px] font-black text-gray-400 uppercase tracking-widest">
                                             Notes
                                         </div>
-                                        <p className="text-sm text-gray-600 leading-relaxed italic">
+                                        <p className="text-sm text-primary-300 leading-relaxed italic">
                                             "{comm.content}"
                                         </p>
                                     </div>
@@ -147,11 +147,11 @@ const Communications = () => {
                     })}
 
                     {filteredCommunications.length === 0 && (
-                        <div className="col-span-full text-center py-24 bg-gray-50/50 rounded-3xl border-2 border-dashed border-gray-200">
-                            <div className="mx-auto h-20 w-20 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                        <div className="col-span-full text-center py-24 bg-primary-900/20 rounded-3xl border-2 border-dashed border-primary-800">
+                            <div className="mx-auto h-20 w-20 bg-primary-900/50 rounded-2xl shadow-sm flex items-center justify-center mb-6">
                                 <MessageSquare className="h-10 w-10 text-gray-300" />
                             </div>
-                            <h3 className="text-lg font-bold text-gray-900">No logs found</h3>
+                            <h3 className="text-lg font-bold text-white">No logs found</h3>
                             <p className="mt-2 text-sm text-gray-500 max-w-xs mx-auto">
                                 {filterType === 'all'
                                     ? "You haven't logged any communications yet. Keep track of your client interactions here."

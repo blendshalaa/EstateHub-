@@ -20,7 +20,7 @@ const Tasks = () => {
         urgent: 'text-red-700 bg-red-50 border-red-100 ring-red-500',
         high: 'text-orange-700 bg-orange-50 border-orange-100 ring-orange-500',
         medium: 'text-blue-700 bg-blue-50 border-blue-100 ring-blue-500',
-        low: 'text-gray-600 bg-gray-50 border-gray-100 ring-gray-400'
+        low: 'text-primary-300 bg-primary-900/50 border-primary-800 ring-primary-700'
     };
 
     const isOverdue = (date) => {
@@ -39,7 +39,7 @@ const Tasks = () => {
         <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Tasks</h1>
+                    <h1 className="text-3xl font-extrabold text-white tracking-tight">Tasks</h1>
                     <p className="text-sm text-gray-500 mt-1 flex items-center">
                         Manage your daily to-do list and follow-ups
                         <ArrowRight className="w-3 h-3 mx-2 text-gray-300" />
@@ -61,7 +61,7 @@ const Tasks = () => {
             />
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 card p-4">
                 <div className="flex items-center space-x-2">
                     {['pending', 'completed', 'all'].map((status) => (
                         <button
@@ -84,7 +84,7 @@ const Tasks = () => {
                             onClick={() => setFilterPriority(priority)}
                             className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${filterPriority === priority
                                 ? 'bg-primary-50 text-primary-700 border-primary-200'
-                                : 'bg-white text-gray-400 border-gray-100 hover:border-gray-200'
+                                : 'bg-primary-900/50 text-primary-400 border-primary-800 hover:border-primary-700'
                                 }`}
                         >
                             {priority}
@@ -132,7 +132,7 @@ const Tasks = () => {
 
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <h3 className={`text-base font-bold truncate ${task.status === 'completed' ? 'text-gray-400 line-through' : 'text-gray-900'
+                                            <h3 className={`text-base font-bold truncate ${task.status === 'completed' ? 'text-primary-500 line-through' : 'text-white'
                                                 }`}>
                                                 {task.title}
                                             </h3>
@@ -141,7 +141,7 @@ const Tasks = () => {
                                             </span>
                                         </div>
 
-                                        <p className={`text-sm line-clamp-2 mb-4 ${task.status === 'completed' ? 'text-gray-400' : 'text-gray-600'
+                                        <p className={`text-sm line-clamp-2 mb-4 ${task.status === 'completed' ? 'text-primary-500' : 'text-primary-300'
                                             }`}>
                                             {task.description}
                                         </p>
@@ -159,7 +159,7 @@ const Tasks = () => {
                                             {task.related_to && (
                                                 <div className="flex items-center text-[11px] font-bold text-gray-400 uppercase tracking-wider">
                                                     <AlertCircle className="h-3.5 w-3.5 mr-1.5" />
-                                                    {task.related_to}: <span className="ml-1 text-gray-600">
+                                                    {task.related_to}: <span className="ml-1 text-primary-300">
                                                         {task.related_to === 'client' ? `${task.client_first_name} ${task.client_last_name}` :
                                                             task.related_to === 'property' ? task.property_address :
                                                                 task.related_to === 'deal' ? task.deal_name : 'N/A'}
@@ -174,11 +174,11 @@ const Tasks = () => {
                     ))}
 
                     {filteredTasks.length === 0 && (
-                        <div className="text-center py-24 bg-gray-50/50 rounded-3xl border-2 border-dashed border-gray-200">
-                            <div className="mx-auto h-20 w-20 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                        <div className="text-center py-24 bg-primary-900/20 rounded-3xl border-2 border-dashed border-primary-800">
+                            <div className="mx-auto h-20 w-20 bg-primary-900/50 rounded-2xl shadow-sm flex items-center justify-center mb-6">
                                 <CheckSquare className="h-10 w-10 text-gray-300" />
                             </div>
-                            <h3 className="text-lg font-bold text-gray-900">No tasks found</h3>
+                            <h3 className="text-lg font-bold text-white">No tasks found</h3>
                             <p className="mt-2 text-sm text-gray-500 max-w-xs mx-auto">
                                 {filterStatus === 'pending'
                                     ? "You're all caught up! No pending tasks to show."

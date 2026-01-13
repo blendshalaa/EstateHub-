@@ -16,18 +16,15 @@ const Modal = ({ isOpen, onClose, title, children, className }) => {
 
                 {/* Modal Panel */}
                 <div className={cn(
-                    "relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg",
+                    "relative transform overflow-hidden rounded-lg bg-primary-900 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-primary-800",
                     className
                 )}>
-                    <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold leading-6 text-gray-900">
-                                {title}
-                            </h3>
+                    <div className="bg-primary-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div className="absolute right-0 top-0 pr-4 pt-4">
                             <button
                                 type="button"
-                                className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
                                 onClick={onClose}
+                                className="rounded-md bg-primary-900 text-primary-400 hover:text-white focus:outline-none"
                             >
                                 <span className="sr-only">Close</span>
                                 <X className="h-6 w-6" aria-hidden="true" />
