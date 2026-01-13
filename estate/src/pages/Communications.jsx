@@ -26,10 +26,10 @@ const Communications = () => {
 
     const getTypeColor = (type) => {
         switch (type) {
-            case 'call': return 'bg-blue-50 text-blue-600 border-blue-100';
-            case 'email': return 'bg-purple-50 text-purple-600 border-purple-100';
-            case 'meeting': return 'bg-green-50 text-green-600 border-green-100';
-            default: return 'bg-primary-900/50 text-primary-300 border-primary-800';
+            case 'call': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+            case 'email': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+            case 'meeting': return 'bg-green-500/20 text-green-400 border-green-500/30';
+            default: return 'bg-primary-700/30 text-primary-300 border-primary-600/30';
         }
     };
 
@@ -42,14 +42,14 @@ const Communications = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-extrabold text-white tracking-tight">Communications</h1>
-                    <p className="text-sm text-gray-500 mt-1 flex items-center">
+                    <p className="text-sm text-primary-400 mt-1 flex items-center">
                         Track all client interactions and touchpoints
-                        <ArrowRight className="w-3 h-3 mx-2 text-gray-300" />
-                        <span className="text-primary-600 font-medium">{communications.length} Total Logs</span>
+                        <ArrowRight className="w-3 h-3 mx-2 text-primary-600" />
+                        <span className="text-secondary-400 font-medium">{communications.length} Total Logs</span>
                     </p>
                 </div>
                 <Button
-                    className="shadow-lg shadow-primary-200"
+                    className="shadow-lg shadow-primary-900/50"
                     onClick={() => setIsModalOpen(true)}
                 >
                     <Plus className="w-4 h-4 mr-2" />
@@ -69,8 +69,8 @@ const Communications = () => {
                         key={type}
                         onClick={() => setFilterType(type)}
                         className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border ${filterType === type
-                            ? 'bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-100 scale-105'
-                            : 'bg-primary-900/50 text-primary-400 border-primary-800 hover:border-primary-700'
+                            ? 'bg-primary-700 text-white border-primary-600 shadow-lg shadow-primary-900/50 scale-105'
+                            : 'bg-primary-900/40 text-primary-400 border-primary-800 hover:bg-primary-800 hover:text-white'
                             }`}
                     >
                         {type}
@@ -81,8 +81,8 @@ const Communications = () => {
             {isLoading && communications.length === 0 ? (
                 <div className="flex justify-center py-24">
                     <div className="relative">
-                        <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-100"></div>
-                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary-600 absolute top-0 left-0"></div>
+                        <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary-800"></div>
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-secondary-500 absolute top-0 left-0"></div>
                     </div>
                 </div>
             ) : (
@@ -91,7 +91,7 @@ const Communications = () => {
                         const Icon = getIcon(comm.communication_type);
                         const typeColor = getTypeColor(comm.communication_type);
                         return (
-                            <Card key={comm.id} className="hover:shadow-xl transition-all duration-300 border-gray-100 group overflow-hidden">
+                            <Card key={comm.id} className="hover:border-primary-600 transition-all duration-300 group overflow-hidden bg-primary-900/40 backdrop-blur-sm border-primary-800">
                                 <div className="p-5">
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center">
@@ -99,15 +99,15 @@ const Communications = () => {
                                                 <Icon className="h-6 w-6" />
                                             </div>
                                             <div className="ml-4">
-                                                <h3 className="text-sm font-bold text-white group-hover:text-primary-400 transition-colors">
+                                                <h3 className="text-sm font-bold text-white group-hover:text-secondary-400 transition-colors">
                                                     {comm.subject}
                                                 </h3>
                                                 <div className="flex items-center mt-1 space-x-3">
-                                                    <div className="flex items-center text-[11px] text-gray-400 font-bold uppercase tracking-wider">
+                                                    <div className="flex items-center text-[11px] text-primary-400 font-bold uppercase tracking-wider">
                                                         <Calendar className="h-3 w-3 mr-1" />
                                                         {new Date(comm.communication_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                                     </div>
-                                                    <div className="flex items-center text-[11px] text-gray-400 font-bold uppercase tracking-wider">
+                                                    <div className="flex items-center text-[11px] text-primary-400 font-bold uppercase tracking-wider">
                                                         <Clock className="h-3 w-3 mr-1" />
                                                         {new Date(comm.communication_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                     </div>
@@ -115,29 +115,29 @@ const Communications = () => {
                                             </div>
                                         </div>
                                         <div className="flex -space-x-2">
-                                            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 border-2 border-white flex items-center justify-center text-white text-[10px] font-black shadow-sm">
+                                            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 border-2 border-primary-800 flex items-center justify-center text-white text-[10px] font-black shadow-sm">
                                                 {getInitials(comm.client_first_name, comm.client_last_name)}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 relative">
-                                        <div className="absolute -top-2 left-4 px-2 bg-gray-50 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                                    <div className="bg-primary-950/50 rounded-xl p-4 border border-primary-800/50 relative">
+                                        <div className="absolute -top-2 left-4 px-2 bg-primary-950 text-[10px] font-black text-primary-500 uppercase tracking-widest rounded">
                                             Notes
                                         </div>
-                                        <p className="text-sm text-primary-300 leading-relaxed italic">
+                                        <p className="text-sm text-primary-200 leading-relaxed italic">
                                             "{comm.content}"
                                         </p>
                                     </div>
 
                                     <div className="mt-4 flex items-center justify-between">
-                                        <div className="flex items-center text-xs text-gray-500">
-                                            <span className="font-bold text-gray-400 uppercase tracking-tighter mr-2">With:</span>
-                                            <span className="font-bold text-primary-700 bg-primary-50 px-2 py-0.5 rounded-md">
+                                        <div className="flex items-center text-xs text-primary-400">
+                                            <span className="font-bold text-primary-500 uppercase tracking-tighter mr-2">With:</span>
+                                            <span className="font-bold text-white bg-primary-800/50 px-2 py-0.5 rounded-md border border-primary-700/50">
                                                 {comm.client_first_name} {comm.client_last_name}
                                             </span>
                                         </div>
-                                        <button className="text-gray-400 hover:text-primary-600 transition-colors">
+                                        <button className="text-primary-500 hover:text-white transition-colors p-1 hover:bg-primary-800 rounded">
                                             <MoreHorizontal className="h-5 w-5" />
                                         </button>
                                     </div>
@@ -149,10 +149,10 @@ const Communications = () => {
                     {filteredCommunications.length === 0 && (
                         <div className="col-span-full text-center py-24 bg-primary-900/20 rounded-3xl border-2 border-dashed border-primary-800">
                             <div className="mx-auto h-20 w-20 bg-primary-900/50 rounded-2xl shadow-sm flex items-center justify-center mb-6">
-                                <MessageSquare className="h-10 w-10 text-gray-300" />
+                                <MessageSquare className="h-10 w-10 text-primary-600" />
                             </div>
                             <h3 className="text-lg font-bold text-white">No logs found</h3>
-                            <p className="mt-2 text-sm text-gray-500 max-w-xs mx-auto">
+                            <p className="mt-2 text-sm text-primary-400 max-w-xs mx-auto">
                                 {filterType === 'all'
                                     ? "You haven't logged any communications yet. Keep track of your client interactions here."
                                     : `No ${filterType} logs found. Try changing the filter or log a new interaction.`}
@@ -160,7 +160,7 @@ const Communications = () => {
                             {filterType === 'all' && (
                                 <div className="mt-8">
                                     <Button
-                                        className="shadow-lg shadow-primary-200"
+                                        className="shadow-lg shadow-primary-900/50"
                                         onClick={() => setIsModalOpen(true)}
                                     >
                                         <Plus className="w-4 h-4 mr-2" />

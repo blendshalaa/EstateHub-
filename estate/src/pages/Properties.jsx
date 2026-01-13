@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Filter, Search, Home } from 'lucide-react';
+import { Plus, Filter, Search, Home, AlertCircle } from 'lucide-react';
 import usePropertyStore from '../store/propertyStore';
 import PropertyCard from '../components/properties/PropertyCard';
 import PropertyModal from '../components/properties/PropertyModal';
@@ -42,11 +42,11 @@ const Properties = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-white">Properties</h1>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-primary-400 mt-1">
                         Manage your property listings and inventory
                     </p>
                 </div>
-                <Button onClick={() => setIsModalOpen(true)}>
+                <Button onClick={() => setIsModalOpen(true)} className="shadow-lg shadow-primary-900/50">
                     <Plus className="w-4 h-4 mr-2" />
                     Add Property
                 </Button>
@@ -58,23 +58,23 @@ const Properties = () => {
             />
 
             {/* Filters */}
-            <div className="card p-4">
+            <div className="bg-primary-900/40 backdrop-blur-sm border border-primary-800 rounded-2xl p-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <Search className="h-4 w-4 text-gray-400" />
+                            <Search className="h-4 w-4 text-primary-400" />
                         </div>
                         <input
                             type="text"
                             placeholder="Search by city..."
-                            className="input pl-10"
+                            className="input pl-10 bg-primary-900/50 border-primary-700 focus:border-secondary-500 text-white placeholder-primary-500"
                             value={filters.city || ''}
                             onChange={handleSearch}
                         />
                     </div>
 
                     <select
-                        className="input"
+                        className="input bg-primary-900/50 border-primary-700 focus:border-secondary-500 text-white"
                         value={filters.type || ''}
                         onChange={handleTypeChange}
                     >
@@ -87,7 +87,7 @@ const Properties = () => {
                     </select>
 
                     <select
-                        className="input"
+                        className="input bg-primary-900/50 border-primary-700 focus:border-secondary-500 text-white"
                         value={filters.status || ''}
                         onChange={handleStatusChange}
                     >
@@ -98,7 +98,7 @@ const Properties = () => {
                         <option value="off_market">Off Market</option>
                     </select>
 
-                    <Button variant="secondary" className="w-full">
+                    <Button variant="secondary" className="w-full bg-primary-800/50 border-primary-700 text-primary-200 hover:text-white hover:bg-primary-700">
                         <Filter className="w-4 h-4 mr-2" />
                         More Filters
                     </Button>
@@ -107,7 +107,8 @@ const Properties = () => {
 
             {/* Error Display */}
             {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+                <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-red-400 flex items-center">
+                    <AlertCircle className="w-5 h-5 mr-2 flex-shrink-0" />
                     <p className="text-sm">{error}</p>
                 </div>
             )}
@@ -115,7 +116,7 @@ const Properties = () => {
             {/* Content */}
             {isLoading ? (
                 <div className="flex justify-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary-800 border-t-secondary-500"></div>
                 </div>
             ) : properties.length > 0 ? (
                 <>
@@ -126,11 +127,11 @@ const Properties = () => {
                     </div>
 
                     {/* Pagination */}
-                    <div className="flex items-center justify-between border-t border-primary-800 pt-4">
-                        <div className="text-sm text-gray-500">
-                            Showing <span className="font-medium">{(pagination.page - 1) * pagination.limit + 1}</span> to{' '}
-                            <span className="font-medium">{Math.min(pagination.page * pagination.limit, pagination.total)}</span> of{' '}
-                            <span className="font-medium">{pagination.total}</span> results
+                    <div className="flex items-center justify-between border-t border-primary-800/50 pt-4">
+                        <div className="text-sm text-primary-400">
+                            Showing <span className="font-bold text-white">{(pagination.page - 1) * pagination.limit + 1}</span> to{' '}
+                            <span className="font-bold text-white">{Math.min(pagination.page * pagination.limit, pagination.total)}</span> of{' '}
+                            <span className="font-bold text-white">{pagination.total}</span> results
                         </div>
                         <div className="flex space-x-2">
                             <Button
@@ -138,6 +139,7 @@ const Properties = () => {
                                 size="sm"
                                 disabled={pagination.page === 1}
                                 onClick={() => setPage(pagination.page - 1)}
+                                className="bg-primary-800 border-primary-700 text-primary-200 hover:text-white"
                             >
                                 Previous
                             </Button>
@@ -146,6 +148,7 @@ const Properties = () => {
                                 size="sm"
                                 disabled={pagination.page === pagination.totalPages}
                                 onClick={() => setPage(pagination.page + 1)}
+                                className="bg-primary-800 border-primary-700 text-primary-200 hover:text-white"
                             >
                                 Next
                             </Button>
@@ -153,16 +156,16 @@ const Properties = () => {
                     </div>
                 </>
             ) : (
-                <div className="text-center py-12 card border-dashed border-primary-700">
-                    <div className="mx-auto h-12 w-12 text-gray-400">
-                        <Home className="h-12 w-12" />
+                <div className="text-center py-24 bg-primary-900/20 rounded-3xl border-2 border-dashed border-primary-800">
+                    <div className="mx-auto h-20 w-20 bg-primary-900/50 rounded-2xl shadow-sm flex items-center justify-center mb-6">
+                        <Home className="h-10 w-10 text-primary-600" />
                     </div>
-                    <h3 className="mt-2 text-sm font-medium text-white">No properties found</h3>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <h3 className="text-lg font-bold text-white">No properties found</h3>
+                    <p className="mt-2 text-sm text-primary-400 max-w-xs mx-auto">
                         Get started by creating a new property listing.
                     </p>
-                    <div className="mt-6">
-                        <Button onClick={() => setIsModalOpen(true)}>
+                    <div className="mt-8">
+                        <Button onClick={() => setIsModalOpen(true)} className="shadow-lg shadow-primary-900/50">
                             <Plus className="w-4 h-4 mr-2" />
                             Add Property
                         </Button>

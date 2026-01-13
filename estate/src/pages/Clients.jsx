@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Search, Filter, Phone, Mail, MoreHorizontal } from 'lucide-react';
+import { Plus, Search, Filter, Phone, Mail, MoreHorizontal, User } from 'lucide-react';
 import useClientStore from '../store/clientStore';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
@@ -61,10 +61,10 @@ const Clients = () => {
     };
 
     const statusColors = {
-        active: 'bg-green-100 text-green-800',
-        lead: 'bg-blue-100 text-blue-800',
-        closed: 'bg-primary-900/50 text-primary-300 border border-primary-700',
-        inactive: 'bg-red-100 text-red-800'
+        active: 'bg-green-500/20 text-green-400 border-green-500/30',
+        lead: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+        closed: 'bg-primary-500/20 text-primary-300 border-primary-500/30',
+        inactive: 'bg-red-500/20 text-red-400 border-red-500/30'
     };
 
     return (
@@ -73,7 +73,7 @@ const Clients = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-white">Clients</h1>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-primary-400 mt-1">
                         Manage your client relationships and leads
                     </p>
                 </div>
@@ -84,23 +84,23 @@ const Clients = () => {
             </div>
 
             {/* Filters */}
-            <div className="card p-4">
+            <div className="bg-primary-900/40 backdrop-blur-sm border border-primary-800 rounded-2xl p-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <Search className="h-4 w-4 text-gray-400" />
+                            <Search className="h-4 w-4 text-primary-400" />
                         </div>
                         <input
                             type="text"
                             placeholder="Search clients..."
-                            className="input pl-10"
+                            className="input pl-10 bg-primary-900/50 border-primary-700 focus:border-secondary-500 text-white placeholder-primary-500"
                             value={filters.search || ''}
                             onChange={handleSearch}
                         />
                     </div>
 
                     <select
-                        className="input"
+                        className="input bg-primary-900/50 border-primary-700 focus:border-secondary-500 text-white"
                         value={filters.status || ''}
                         onChange={handleStatusChange}
                     >
@@ -111,7 +111,7 @@ const Clients = () => {
                         <option value="inactive">Inactive</option>
                     </select>
 
-                    <Button variant="secondary" className="w-full">
+                    <Button variant="secondary" className="w-full bg-primary-800/50 border-primary-700 text-primary-200 hover:text-white hover:bg-primary-700">
                         <Filter className="w-4 h-4 mr-2" />
                         More Filters
                     </Button>
@@ -119,55 +119,55 @@ const Clients = () => {
             </div>
 
             {/* Table */}
-            <div className="card overflow-hidden">
+            <div className="bg-primary-900/40 backdrop-blur-sm border border-primary-800 rounded-2xl overflow-hidden shadow-xl">
                 <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
+                    <table className="min-w-full divide-y divide-primary-800">
+                        <thead className="bg-primary-900/80">
                             <tr>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">
                                     Client
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">
                                     Contact
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">
                                     Status
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">
                                     Budget
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">
                                     Lead Score
                                 </th>
-                                <th scope="col" className="relative px-6 py-3">
+                                <th scope="col" className="relative px-6 py-4">
                                     <span className="sr-only">Actions</span>
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-primary-900/50 divide-y divide-primary-800">
+                        <tbody className="divide-y divide-primary-800/50">
                             {isLoading ? (
                                 <tr>
                                     <td colSpan="6" className="px-6 py-12 text-center">
                                         <div className="flex justify-center">
-                                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-secondary-500"></div>
                                         </div>
                                     </td>
                                 </tr>
                             ) : clients.length > 0 ? (
                                 clients.map((client) => (
-                                    <tr key={client.id} className="hover:bg-gray-50 transition-colors">
+                                    <tr key={client.id} className="hover:bg-primary-800/30 transition-colors group">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                    <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-medium">
+                                                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary-700 to-primary-800 border border-primary-600 flex items-center justify-center text-white font-bold shadow-lg">
                                                         {getInitials(client.first_name, client.last_name)}
                                                     </div>
                                                 </div>
                                                 <div className="ml-4">
-                                                    <div className="text-sm font-medium text-white">
+                                                    <div className="text-sm font-bold text-white group-hover:text-secondary-400 transition-colors">
                                                         {client.first_name} {client.last_name}
                                                     </div>
-                                                    <div className="text-sm text-gray-500">
+                                                    <div className="text-xs text-primary-400">
                                                         Added {formatDate(client.created_at)}
                                                     </div>
                                                 </div>
@@ -175,27 +175,27 @@ const Clients = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex flex-col space-y-1">
-                                                <div className="flex items-center text-sm text-gray-500">
-                                                    <Mail className="w-4 h-4 mr-2" />
+                                                <div className="flex items-center text-sm text-primary-300">
+                                                    <Mail className="w-3 h-3 mr-2 text-primary-500" />
                                                     {client.email}
                                                 </div>
-                                                <div className="flex items-center text-sm text-gray-500">
-                                                    <Phone className="w-4 h-4 mr-2" />
+                                                <div className="flex items-center text-sm text-primary-300">
+                                                    <Phone className="w-3 h-3 mr-2 text-primary-500" />
                                                     {client.phone}
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${statusColors[client.status]}`}>
+                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold capitalize border ${statusColors[client.status]}`}>
                                                 {client.status}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
                                             {formatCurrency(client.budget)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
-                                                <div className="flex-1 h-2 w-24 bg-gray-200 rounded-full overflow-hidden">
+                                                <div className="flex-1 h-1.5 w-24 bg-primary-800 rounded-full overflow-hidden">
                                                     <div
                                                         className={`h-full rounded-full ${client.lead_score >= 80 ? 'bg-green-500' :
                                                             client.lead_score >= 50 ? 'bg-yellow-500' :
@@ -204,11 +204,11 @@ const Clients = () => {
                                                         style={{ width: `${client.lead_score}%` }}
                                                     />
                                                 </div>
-                                                <span className="ml-2 text-sm text-gray-500">{client.lead_score}</span>
+                                                <span className="ml-2 text-xs font-bold text-primary-300">{client.lead_score}</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button className="text-gray-400 hover:text-gray-500">
+                                            <button className="text-primary-400 hover:text-white transition-colors p-2 hover:bg-primary-700/50 rounded-lg">
                                                 <MoreHorizontal className="w-5 h-5" />
                                             </button>
                                         </td>
@@ -216,8 +216,14 @@ const Clients = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
-                                        No clients found
+                                    <td colSpan="6" className="px-6 py-16 text-center">
+                                        <div className="flex flex-col items-center justify-center">
+                                            <div className="bg-primary-800/50 p-4 rounded-full mb-3">
+                                                <User className="h-8 w-8 text-primary-400" />
+                                            </div>
+                                            <p className="text-primary-300 font-medium">No clients found</p>
+                                            <p className="text-primary-500 text-sm mt-1">Try adjusting your filters or add a new client.</p>
+                                        </div>
                                     </td>
                                 </tr>
                             )}
@@ -227,13 +233,13 @@ const Clients = () => {
 
                 {/* Pagination */}
                 {clients.length > 0 && (
-                    <div className="bg-primary-900/50 px-4 py-3 border-t border-primary-800 flex items-center justify-between sm:px-6">
+                    <div className="bg-primary-900/80 px-4 py-3 border-t border-primary-800 flex items-center justify-between sm:px-6">
                         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
-                                <p className="text-sm text-primary-300">
-                                    Showing <span className="font-medium">{(pagination.page - 1) * pagination.limit + 1}</span> to{' '}
-                                    <span className="font-medium">{Math.min(pagination.page * pagination.limit, pagination.total)}</span> of{' '}
-                                    <span className="font-medium">{pagination.total}</span> results
+                                <p className="text-sm text-primary-400">
+                                    Showing <span className="font-bold text-white">{(pagination.page - 1) * pagination.limit + 1}</span> to{' '}
+                                    <span className="font-bold text-white">{Math.min(pagination.page * pagination.limit, pagination.total)}</span> of{' '}
+                                    <span className="font-bold text-white">{pagination.total}</span> results
                                 </p>
                             </div>
                             <div>
@@ -241,7 +247,7 @@ const Clients = () => {
                                     <Button
                                         variant="secondary"
                                         size="sm"
-                                        className="rounded-l-md rounded-r-none"
+                                        className="rounded-l-lg rounded-r-none border-primary-700 bg-primary-800 text-primary-200 hover:bg-primary-700 hover:text-white"
                                         disabled={pagination.page === 1}
                                         onClick={() => setPage(pagination.page - 1)}
                                     >
@@ -250,7 +256,7 @@ const Clients = () => {
                                     <Button
                                         variant="secondary"
                                         size="sm"
-                                        className="rounded-l-none rounded-r-md"
+                                        className="rounded-l-none rounded-r-lg border-primary-700 bg-primary-800 text-primary-200 hover:bg-primary-700 hover:text-white"
                                         disabled={pagination.page === pagination.totalPages}
                                         onClick={() => setPage(pagination.page + 1)}
                                     >
