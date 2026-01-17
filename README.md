@@ -2,6 +2,15 @@
 
 EstateHub is a modern, full-stack Real Estate CRM designed for agents to manage their properties, clients, deals, and daily tasks with ease. It features a sleek "Midnight Dark Theme" with glassmorphism and a highly responsive dashboard.
 
+## 📱 Preview
+
+![Dashboard Overview](./assets/screenshots/dashboard.png)
+
+<p align="center">
+  <img src="./assets/screenshots/properties.png" width="45%" />
+  <img src="./assets/screenshots/map.png" width="45%" />
+</p>
+
 ## ✨ Features
 
 - **📊 Dynamic Dashboard**: Real-time stats on active deals, scheduled showings, and upcoming tasks.
