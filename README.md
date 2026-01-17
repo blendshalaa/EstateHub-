@@ -7,8 +7,22 @@ EstateHub is a modern, full-stack Real Estate CRM designed for agents to manage 
 ![Dashboard Overview](./assets/screenshots/dashboard.png)
 
 <p align="center">
-  <img src="./assets/screenshots/properties.png" width="45%" />
-  <img src="./assets/screenshots/map.png" width="45%" />
+  <img src="./assets/screenshots/properties.png" width="45%" alt="Properties" />
+  <img src="./assets/screenshots/map.png" width="45%" alt="Map" />
+</p>
+
+<p align="center">
+  <img src="./assets/screenshots/deals.png" width="45%" alt="Deals" />
+  <img src="./assets/screenshots/clients.png" width="45%" alt="Clients" />
+</p>
+
+<p align="center">
+  <img src="./assets/screenshots/showings.png" width="45%" alt="Showings" />
+  <img src="./assets/screenshots/communications.png" width="45%" alt="Communications" />
+</p>
+
+<p align="center">
+  <img src="./assets/screenshots/tasks.png" width="45%" alt="Tasks" />
 </p>
 
 ## ✨ Features
